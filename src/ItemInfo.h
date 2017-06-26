@@ -10,14 +10,17 @@ using namespace std;
 class ItemInfo {
 public:
     string itemName;
-    int tf;
+    int cf;
     int df;
     map<int,vector<int>> DocPos;
     void initial(){
         itemName="";
-        tf=0;
+        cf=0;
         df=0;
-        DocPos.empty();
+        DocPos.clear();
+    }
+    int getTf(int docID){
+        return DocPos[docID].size();
     }
 };
 #endif //IR_PROJECT_ITEMINFO_H

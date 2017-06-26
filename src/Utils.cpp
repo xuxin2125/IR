@@ -37,7 +37,6 @@ string Utils::normalize(string doc) {
             case '!':
             case '?':
             case ':':
-            case ';':
             case '(':
             case ')':
             case '<':
@@ -46,14 +45,21 @@ string Utils::normalize(string doc) {
             case ']':
             case '\'':
             case '\"':
+                break;
+            case ';':
+            case '-':
+            case '/':
+            case '\\':
             case '\n':
-            case '\t':break;
+            case '\t':
+            case ' ':
+                if(str.length()>0&&str.back()!=' ')
+                    str+=' ';
+                break;
             case '.':
                 if(i<doc.length()-1&&(doc[i+1]!=' '&&doc[i+1]!='\n'))
                     str+=doc[i];
                 break;
-            case ' ':
-                if((i!=0&&doc[i-1]==' ')||(i==0&&doc[i]==' ')) break;
             default: str+=doc[i];
         }
 
@@ -76,15 +82,24 @@ string Utils::toLower(string str){
 vector<string> Utils::split(string str) {
     vector<string> itemList;
     string word="";
+    bool flag=false;
     for(int i=0;i<str.length();i++)
     {
-        if(str[i]!=' ')
-            word+=str[i];
-        else
+        if(str[i]!=' ') //不为空格
         {
-            itemList.push_back(word);
-            word="";
+            word += str[i];
+            flag=true;
         }
+        else //为空格
+        {
+            if(flag==true) {
+                itemList.push_back(word);
+                word = "";
+            }
+            flag=false;
+        }
+        if(str.back()!=' ')
+            itemList.push_back(word);
     }
     return itemList;
 

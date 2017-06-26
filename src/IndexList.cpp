@@ -24,14 +24,14 @@ map<string, ItemInfo> IndexList::CreateIndex(int docN)
                 itemInfo.initial();
                 itemInfo.itemName=itemList[j];
                 itemInfo.df++;
-                itemInfo.tf++;
+                itemInfo.cf++;
                 vector<int> pos;
                 pos.push_back(j+1);
                 itemInfo.DocPos[i]=pos;
                 index[itemList[j]]=itemInfo;
             }
             else{
-                index[itemList[j]].tf++;
+                index[itemList[j]].cf++;
                 if(index[itemList[j]].DocPos.find(i)==index[itemList[j]].DocPos.end()) //位置索引中没有该文档ID
                 {
                     index[itemList[j]].df++;
@@ -57,12 +57,12 @@ void IndexList::printIndex() {
     {
         string item=it->first;
         ItemInfo itemInfo=it->second;
-        cout<<item<<','<<itemInfo.tf<<':'<<endl;
+        cout<<item<<",cf="<<itemInfo.cf<<",df="<<itemInfo.df<<':'<<endl;
         map<int,vector<int>>::iterator p;
         p=itemInfo.DocPos.begin();
         while(p!=itemInfo.DocPos.end())
         {
-            cout<<"      "<<p->first<<','<<p->second.size()<<":<";
+            cout<<"      "<<p->first<<",tf="<<itemInfo.getTf(p->first)<<":<";
             int i;
             for(i=0;i<(p->second.size()-1);i++)
                 cout<<p->second[i]<<',';
