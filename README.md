@@ -1,4 +1,8 @@
 # 信息检索
+## 环境配置
+语言：C++
+平台：CLion 2016.3.2
+文件：src为代码源文件，Reuters为语料库
 ## 模块说明
 ### 索引模块
 IndexList.h 和indexList.cpp  <br>
@@ -96,4 +100,5 @@ please input your words
 ba*
 find following term: backlog OR bags OR bahia OR balance OR ball OR balt OR baltimore OR bank OR bankruptcy OR banks OR barge OR barges OR barley OR base OR based OR basis
 1 5 42 44 45 46 47 48 49 56 59 68 74 78 80 81 94 95 97 100 
+After sort, just show Top 15: 81 1 42 56 49 78 94 95 59 68 100 80 5 44 97 
 ```

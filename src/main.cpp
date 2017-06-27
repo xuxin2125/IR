@@ -12,6 +12,7 @@ int main() {
     char str[100];
     string query;
     vector<int> res;
+    bool sortFlag=true;
     //ToDO 索引模块 倒排记录表+轮排索引+文档词袋  词条化+去除停用词
     IndexList *indexList=new IndexList();
     map<string, ItemInfo> index=indexList->CreateIndex(docN);
@@ -44,18 +45,19 @@ int main() {
 
         words=q->getWords();
         //ToDO 排序和TOP K
-        res=vsm->calScore(words,res,indexList);
-        if(res.size()<=topK) {
-            cout << "After sort: ";
-            for (int i = 0; i < res.size(); i++)
-                cout << res[i] << " ";
-            cout << endl;
-        }
-        else{
-            cout << "After sort, just show Top "<<topK<<": ";
-            for (int i = 0; i < topK; i++)
-                cout << res[i] << " ";
-            cout << endl;
+        if(sortFlag==true) {
+            res = vsm->calScore(words, res, indexList);
+            if (res.size() <= topK) {
+                cout << "After sort: ";
+                for (int i = 0; i < res.size(); i++)
+                    cout << res[i] << " ";
+                cout << endl;
+            } else {
+                cout << "After sort, just show Top " << topK << ": ";
+                for (int i = 0; i < topK; i++)
+                    cout << res[i] << " ";
+                cout << endl;
+            }
         }
 
     }
