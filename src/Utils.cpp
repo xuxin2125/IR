@@ -120,8 +120,17 @@ vector<string> Utils::split(string str) {
             flag=false;
         }
     }
-    if(str.back()!=' ')
+    if(str!=""&&str.back()!=' ')
         itemList.push_back(word);
     return itemList;
+
+}
+
+string Utils::rotateStr(string str) {
+    string newStr="";
+    newStr+=str.back();
+    for(int i=0;i<str.length()-1;i++)
+        newStr+=str[i];
+    return newStr;
 
 }

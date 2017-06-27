@@ -9,13 +9,17 @@
 #include "ItemInfo.h"
 using namespace std;
 class IndexList {
-public:
-    vector<int> docID;
-    map<string, ItemInfo> CreateIndex(int maxDocNum);
-    void printIndex();
-    map<string, ItemInfo> getIndex(){ return index;};
 private:
     map<string, ItemInfo> index;
+    map<string,string> permutermIndex;
+public:
+    vector<int> docID;
+public:
+    map<string, ItemInfo> CreateIndex(int maxDocNum);
+    map<string,string> CreatePermutermIndex();
+    void printIndex();
+    map<string, ItemInfo> getIndex(){ return index;};
+    map<string, string> getPermutermIndex(){ return permutermIndex;};
 
 
 

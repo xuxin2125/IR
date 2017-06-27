@@ -9,6 +9,7 @@
 #include <string>
 #include <list>
 #include <vector>
+
 using namespace std;
 class Utils {
 private:
@@ -21,6 +22,7 @@ public:
     string normalize(string doc);
     string toLower(string str);
     vector<string> split(string str);
+    string rotateStr(string str);
 };
 
 

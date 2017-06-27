@@ -10,7 +10,7 @@ map<string, ItemInfo> IndexList::CreateIndex(int docN)
     utils->loadStopWords("../src/stopWords.txt");
     for(int i=1;i<=docN;i++) {
         string filename = "../Reuters/";
-        filename+=char('0'+i);
+        filename+=to_string(i);
         filename+=".html";
         string str;
         if(!utils->file_exist(filename)) continue;
@@ -75,3 +75,21 @@ void IndexList::printIndex() {
         it++;
     }
 }
+
+map<string,string> IndexList::CreatePermutermIndex() {
+    Utils *utils=new Utils();
+    map<string,ItemInfo>::iterator it;
+    string term;
+    for(it = index.begin();it != index.end();it++)
+    {
+        term=it->first+'$';
+        for(int i=0;i<term.length();i++)
+        {
+            permutermIndex[term]=it->first;
+            term=utils->rotateStr(term);
+        }
+
+    }
+    return permutermIndex;
+}
+

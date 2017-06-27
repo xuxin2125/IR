@@ -6,7 +6,10 @@
 
 vector<int> Query::query(string q, IndexList *indexList) {
     q=preprocessor(q);
-    enumWords(q);
+    if(enumWords(q).empty()){
+        vector<int> tmp;
+        return tmp;   //返回空列表®
+    }
     //-------JUST TRY---------
     vector<string> words;
     Utils *utils = new Utils();
@@ -22,11 +25,35 @@ vector<int> Query::query(string q, IndexList *indexList) {
     }
     else if(words.size()==1&&words[0].find("*")!=-1) //通配符 TODO
     {
-        return processor(q,indexList);
+        return wildcardQuery(words[0],indexList);
     }
     //---------END------------
     else
         return processor(q,indexList);
+}
+//目前只支持单个*通配符
+vector<int> Query::wildcardQuery(string q,IndexList *indexList) {
+    string newQuery="";
+    Utils *utils=new Utils();
+    map<string,string> permutermIndex=indexList->getPermutermIndex();
+    map<string,string>::iterator it;
+    q+='$';
+    while(q.back()!='*')
+        q=utils->rotateStr(q);
+    q.pop_back();
+    for(it=permutermIndex.begin();it!=permutermIndex.end();it++)
+        if(it->first.find(q)==0) //匹配
+        {
+            if(newQuery=="")
+                newQuery+=it->second;
+            else
+                newQuery=newQuery+" OR "+it->second;
+        }
+    //----------------提示------------
+    if(newQuery!="")
+        cout<<"find following term: "<<newQuery<<endl;
+    return query(newQuery, indexList);
+
 }
 
 vector<string> Query::enumWords(string query) { //统计查询向量
@@ -234,6 +261,47 @@ vector<int> Query::boolCal(string op, vector<int> a, vector<int> b)
     return res;
 }
 
+string Query::spellCorrect(map<string, ItemInfo> index, string w) {
+    map<string,ItemInfo>::iterator it;
+    int minLevenshteinDistance=999;
+    string newWord=w;
+    for(it = index.begin();it != index.end();it++)
+        if(editDistance(w,it->first)<minLevenshteinDistance) {
+            newWord = it->first;
+            minLevenshteinDistance=editDistance(w,it->first);
+        }
+    return newWord;
+}
+
+int Query::editDistance(string a, string b) {
+    int i,j;
+    int s1=a.length()+1; //行数
+    int s2=b.length()+1; //列数
+    int m[s1][s2];
+    for(i=0;i<s1;i++)
+        m[i][0]=i;
+    for(i=0;i<s2;i++)
+        m[0][i]=i;
+    for(i=1;i<s1;i++)
+        for(j=1;j<s2;j++)
+        {
+            if(a[i-1]==b[j-1])
+                m[i][j]=min(m[i-1][j-1],m[i-1][j]+1,m[i][j-1]+1);
+            else
+                m[i][j]=min(m[i-1][j-1]+1,m[i-1][j]+1,m[i][j-1]+1);
+        }
+    return m[s1-1][s2-1];
+
+}
+
+int Query::min(int x, int y, int z)
+{
+    int tmp = (x<y ? x : y);
+    tmp = (tmp<z ? tmp : z);
+    return tmp;
+}
+
+//-------------测试函数---------------
 void Query::test() {
     vector<int> a={2,4,3,1};
     vector<int> b={2,3};
