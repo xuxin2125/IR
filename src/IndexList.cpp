@@ -93,3 +93,21 @@ map<string,string> IndexList::CreatePermutermIndex() {
     return permutermIndex;
 }
 
+map<int,vector<string>> IndexList::createBoW() {
+    map<string,ItemInfo>::iterator it;
+    map<int,vector<int>>::iterator p;
+    string word;
+    ItemInfo itemInfo;
+    int docId;
+    for(it = index.begin();it != index.end();it++)
+    {
+        word=it->first;
+        itemInfo=it->second;
+        for(p=itemInfo.DocPos.begin();p!=itemInfo.DocPos.end();p++)
+        {
+            docId=p->first;
+            docBoW[docId].push_back(word);
+        }
+    }
+    return docBoW;
+}

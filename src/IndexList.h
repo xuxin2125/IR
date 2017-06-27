@@ -14,13 +14,14 @@ private:
     map<string,string> permutermIndex;
 public:
     vector<int> docID;
+    map<int,vector<string>> docBoW;
 public:
     map<string, ItemInfo> CreateIndex(int maxDocNum);
     map<string,string> CreatePermutermIndex();
+    map<int,vector<string>> createBoW();
     void printIndex();
     map<string, ItemInfo> getIndex(){ return index;};
     map<string, string> getPermutermIndex(){ return permutermIndex;};
-
 
 
 };
