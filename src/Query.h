@@ -19,6 +19,7 @@ private:
     vector<string> mWords;
 public:
     vector<int> query(string q,IndexList *indexList);
+    vector<string> getWords(){ return mWords; };
     void test();
 private:
     string preprocessor(string query);
