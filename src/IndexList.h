@@ -10,10 +10,13 @@
 using namespace std;
 class IndexList {
 public:
+    vector<int> docID;
     map<string, ItemInfo> CreateIndex(int maxDocNum);
     void printIndex();
+    map<string, ItemInfo> getIndex(){ return index;};
 private:
     map<string, ItemInfo> index;
+
 
 
 };

@@ -22,5 +22,13 @@ public:
     int getTf(int docID){
         return DocPos[docID].size();
     }
+    vector<int> getDocList()
+    {
+        vector<int> docList;
+        map<int,vector<int>>::iterator p;
+        for(p=DocPos.begin();p!=DocPos.end();p++)
+            docList.push_back(p->first);
+        return docList;
+    }
 };
 #endif //IR_PROJECT_ITEMINFO_H

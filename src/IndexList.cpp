@@ -6,17 +6,20 @@
 #include "Utils.h"
 map<string, ItemInfo> IndexList::CreateIndex(int docN)
 {
+    Utils *utils = new Utils();
+    utils->loadStopWords("../src/stopWords.txt");
     for(int i=1;i<=docN;i++) {
         string filename = "../Reuters/";
         filename+=char('0'+i);
         filename+=".html";
-        Utils *utils = new Utils();
         string str;
         if(!utils->file_exist(filename)) continue;
+        docID.push_back(i);
         str = utils->readfile(filename);
         str = utils->toLower(str);
         str = utils->normalize(str);
         vector <string> itemList = utils->split(str);
+        itemList=utils->deleteStopWords(itemList);
         for (int j = 0; j < itemList.size(); j++){
             if(index.find(itemList[j])==index.end()) //倒排索引中没有该词条
             {

@@ -4,6 +4,27 @@
 
 #include "Utils.h"
 
+void Utils::loadStopWords(string filename)
+{
+    string wordsDoc=readfile(filename);
+    wordsDoc=normalize(wordsDoc);
+    stopWords=split(wordsDoc);
+}
+
+vector<string> Utils::deleteStopWords(vector<string> words)
+{
+    int i,j;
+    vector<string> newWords;
+    for(i=0;i<words.size();i++) {
+        for (j = 0; j < stopWords.size(); j++)
+            if (words[i] == stopWords[j])
+                break;
+        if(j==stopWords.size())
+            newWords.push_back(words[i]);
+    }
+    return newWords;
+}
+
 bool Utils::file_exist(string filename)
 {
     ifstream fin( filename.c_str());
@@ -98,9 +119,9 @@ vector<string> Utils::split(string str) {
             }
             flag=false;
         }
-        if(str.back()!=' ')
-            itemList.push_back(word);
     }
+    if(str.back()!=' ')
+        itemList.push_back(word);
     return itemList;
 
 }

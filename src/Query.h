@@ -15,14 +15,20 @@
 using namespace std;
 
 class	Query {
-public:
-    vector<bool> result;
-    vector<bool> pocessquery(map<string, ItemInfo> index, int docnum);//查询入口
 private:
-    vector<bool> boolretrieval(map<string, ItemInfo> index, string q, int docnum); //在index中查询一个单词
-    string spell_correct(map<string, ItemInfo> index, string w);// 拼写矫正
-    unsigned lev_distance(string a, string b);// 计算Levenshtein距离
-    unsigned min(unsigned x, unsigned y, unsigned z);//返回最小值
+    vector<string> mWords;
+public:
+    vector<int> query(string q,IndexList *indexList);
+    void test();
+private:
+    string preprocessor(string query);
+    bool isK(string str);
+    vector<string> enumWords(string query);
+    vector<int> processor(string query,IndexList *indexList);
+    vector<int> biwordProcess(vector<string>multiWords,map<string, ItemInfo> indexN);
+    vector<int> positionalInsersect(ItemInfo p1,ItemInfo p2,int k);
+    vector<int> boolCal(string op, vector<int> a, vector<int> b);
+
 };
 
 
