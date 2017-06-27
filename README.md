@@ -12,7 +12,7 @@ map<int,vector<string>> docBoW=indexList->createBoW();
 ### 词条模块
 ItemInfo.h  <br>
 存储一个词条的cf、df、和文档位置信息，并且提供获得文档tf接口。
-## 查询模块
+### 查询模块
 Query.h 和 Query.cpp <br>
 实现了布尔查询、短语查询、通配符查询、K近临查询和拼写校正
 ### 向量空间模块
@@ -22,6 +22,9 @@ VSM.h  和 VSM.cpp <br>
 Utils.h 和 Utils.cpp <br>
 实现了词条化、去除停用词以及其他一些类似字符串分割、大小写转换、旋转字符串、读取文件的基本功能。
 ## 功能演示
+为方便理解，在非排序演示功能块，关闭了排序功能。<br>
+非排序功能演示测试文档大小 docN=20 <br>
+排序功能演示测试文档大小 docN=100
 ### 显示倒排记录表
 ```
 about,cf=2,df=2:
